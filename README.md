@@ -29,7 +29,7 @@ or via alfred:
 ## Quick Setup
 Submitting a message is as simple as GET/POST request. If you only need the id, there is no need to post a body. However, posting a body will be the messages `value`. Retreiving a message is as simple as `GET /topicname`.
 
-In the following example, we'll create a message(and topic too) called `nemo-characters` with a new message. `message.id = "crush"` and `message.value = "the turtle"`. Easy PZ.
+In the following example, we'll create a message(and topic too!). The topic is `nemo-characters` with a new message. `message.id = "crush"` and `message.value = "the turtle"`. Easy PZ.
 
 ### Submit message
 `$ curl -X POST -d "the turtle" http://localhost:8000/nemo-characters/crush`

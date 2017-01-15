@@ -34,5 +34,9 @@ In the following example, we'll create a message(and topic too!). The topic is `
 ### Submit message
 `$ curl -X POST -d "the turtle" http://localhost:8000/nemo-characters/crush`
 
+or
+
+`$ curl -X GET http://localhost:8000/nemo-characters/nemo`
+
 ### Grab message
 `$ curl -X GET http://localhost:8000/nemo-characters`

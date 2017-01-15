@@ -1,20 +1,30 @@
-![queued](https://raw.githubusercontent.com/kcmerrill/queued/master/assets/queued2.png)
+![crush](https://raw.githubusercontent.com/kcmerrill/queued/master/assets/crush.jpg)
 
 ## Installation
-`$ go get -u github.com/kcmerrill/queued`
+`$ go get -u github.com/kcmerrill/crush`
 
 or via docker:
 
-`$ docker run -P -d kcmerrill/queued`
+`$ docker run -P -d kcmerrill/crush`
 
 ## Summary
-Queued is just a simple in memory queue system.
+`Crush` is a simple, laid back, rest based and in-memory queue.
 
-## Instructions
-Create a topic `heros` with a message id of `superman`. The value of given message is `clark kent`:
+## Features
+ - Quick and easy setup
+ - Submit and retrieve messages
+ - (b) Create web based workers to be used with
+ - (b) Remember the results for a given message id
+ - (b) Submit messages in intervals(daily, weekly, hourly, etc ..)
+ - (b) Submit messages with a time delay
 
-`$ curl -X POST -d "clark kent" http://localhost:8000/heros/superman`
+(b) - in backlog
 
-Grab a message off the topic `heros`(not FIFO):
+## Quick Setup
+Create a topic `characters` with a message id of `crush`. The value of given message with id `crush` is `the turtle`:
 
-`$ curl -X GET http://localhost:8000/heros`
+`$ curl -X POST -d "the turtle" http://localhost:8000/characters/crush`
+
+Grab a message off the topic `characters`(not FIFO):
+
+`$ curl -X GET http://localhost:8000/characters`

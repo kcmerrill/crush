@@ -6,3 +6,16 @@ tdd*:
 test*:
     summary: Test
     command: go test --cover
+
+build*:
+    summary: Build docker container
+    command: |
+        docker build -t kcmerrill/queued .
+
+push*:
+    summary: Deploy to dockerhub
+    command: docker push kcmerrill/queued:latest
+
+deploy:
+    summary: Deploy
+    tasks: build push

@@ -7,6 +7,10 @@ or via docker:
 
 `$ docker run -P -d --name crush kcmerrill/crush`
 
+or via alfred:
+
+`$ alfred kcmerrill/crush start`
+
 ## Summary
 `Crush` is a simple, laid back, rest based and in-memory queue.
 

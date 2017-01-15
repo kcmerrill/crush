@@ -19,3 +19,8 @@ push*:
 deploy:
     summary: Deploy
     tasks: build push
+
+start:
+    summary: Start Crush in a docker container
+    command: |
+        docker run -P -d --name crush kcmerrill/crush

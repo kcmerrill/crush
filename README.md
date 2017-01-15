@@ -1,3 +1,6 @@
+# Crush
+`Crush` is a simple, laid back, rest based in-memory queue.
+
 [![Build Status](https://travis-ci.org/kcmerrill/crush.svg?branch=master)](https://travis-ci.org/kcmerrill/crush)
 
 ![crush](https://raw.githubusercontent.com/kcmerrill/queued/master/assets/crush.jpg)
@@ -12,9 +15,6 @@ or via docker:
 or via alfred:
 
 `$ alfred kcmerrill/crush start`
-
-## Summary
-`Crush` is a simple, laid back, rest based in-memory queue.
 
 ## Features
  - Quick and easy setup

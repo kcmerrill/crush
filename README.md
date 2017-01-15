@@ -1,4 +1,4 @@
-![queued](https://raw.githubusercontent.com/kcmerrill/queued/master/assets/queued.png)
+![queued](https://raw.githubusercontent.com/kcmerrill/queued/master/assets/queued2.png)
 
 ## Installation
 `$ go get -u github.com/kcmerrill/queued`
@@ -8,7 +8,7 @@ or via docker:
 `$ docker run -P -d kcmerrill/queued`
 
 ## Summary
-Queued is just a simple in memory queue system to be used in simple applications.
+Queued is just a simple in memory queue system.
 
 ## Instructions
 Create a topic `heros` with a message id of `superman`. The value of given message is `clark kent`:

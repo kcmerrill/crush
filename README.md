@@ -29,6 +29,7 @@ or via alfred:
 ## Quick Setup
 
 `$ curl -X POST -d "the turtle" http://localhost:8000/characters/crush`
+
 Creates a topic(if it doesn't exist) `characters` with a message id of `crush`. The value of given message with id `crush` is `the turtle`. The body of the request is the value of the message. This can be anything you want.
 
 `$ curl -X GET http://localhost:8000/characters`

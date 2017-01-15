@@ -13,7 +13,7 @@ func NewMessage(topic, id, value string) *Message {
 		Attempts: 3,
 		Created:  time.Now(),
 		Requeued: time.Now(),
-		Flight:   5 * time.Second,
+		Flight:   5 * time.Minute,
 	}
 }
 

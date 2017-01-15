@@ -5,7 +5,7 @@
 
 or via docker:
 
-`$ docker run -P -d kcmerrill/crush`
+`$ docker run -P -d --name crush kcmerrill/crush`
 
 ## Summary
 `Crush` is a simple, laid back, rest based and in-memory queue.

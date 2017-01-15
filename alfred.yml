@@ -10,11 +10,11 @@ test*:
 build*:
     summary: Build docker container
     command: |
-        docker build -t kcmerrill/queued .
+        docker build -t kcmerrill/crush .
 
 push*:
     summary: Deploy to dockerhub
-    command: docker push kcmerrill/queued:latest
+    command: docker push kcmerrill/crush:latest
 
 deploy:
     summary: Deploy

@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/kcmerrill/crush.svg?branch=master)](https://travis-ci.org/kcmerrill/crush)
+
 ![crush](https://raw.githubusercontent.com/kcmerrill/queued/master/assets/crush.jpg)
 
 ## Installation
@@ -25,10 +27,10 @@ or via alfred:
 (b) - in backlog
 
 ## Quick Setup
-Create a topic `characters` with a message id of `crush`. The value of given message with id `crush` is `the turtle`:
 
 `$ curl -X POST -d "the turtle" http://localhost:8000/characters/crush`
-
-Grab a message off the topic `characters`(not FIFO):
+Creates a topic(if it doesn't exist) `characters` with a message id of `crush`. The value of given message with id `crush` is `the turtle`. The body of the request is the value of the message. This can be anything you want.
 
 `$ curl -X GET http://localhost:8000/characters`
+
+Grabs a message off the topic `characters`(not FIFO).

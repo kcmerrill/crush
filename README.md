@@ -14,7 +14,7 @@ or via alfred:
 `$ alfred kcmerrill/crush start`
 
 ## Summary
-`Crush` is a simple, laid back, rest based and in-memory queue.
+`Crush` is a simple, laid back, rest based in-memory queue.
 
 ## Features
  - Quick and easy setup

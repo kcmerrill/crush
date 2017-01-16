@@ -31,5 +31,6 @@ git:
         git push origin master
 start:
     summary: Start Crush in a docker container
+    docker: kill.remove crush
     command: |
         docker run -P -d --name crush kcmerrill/crush

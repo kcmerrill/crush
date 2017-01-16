@@ -18,8 +18,17 @@ push*:
 
 deploy:
     summary: Deploy
-    tasks: build push
+    tasks: test git build push
 
+git:
+    summary: Update git
+    command: |
+        git status
+        echo "^^^ ok to commit? Ctrl+C now if you wish to bail"
+        read ok
+        git add .
+        git commit
+        git push origin master
 start:
     summary: Start Crush in a docker container
     command: |

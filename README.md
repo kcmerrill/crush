@@ -40,3 +40,6 @@ or
 
 ### Grab message
 `$ curl -X GET http://localhost:8000/nemo-characters`
+
+### Delete message
+`$ curl -X DELETE http://localhost:8000/nemo-characters/nemo`

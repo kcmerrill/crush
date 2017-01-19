@@ -80,7 +80,7 @@ func TestWatchMessage(t *testing.T) {
 	/* Create a message */
 	m := NewMessage("bleh", "id", "testwatchmessage()")
 	m.Attempts = 2
-	m.Flight = 100 * time.Millisecond
+	m.Flight = "100ms"
 	topic.NewRawMessage(m)
 
 	/* Grab the message, verify it's contents */

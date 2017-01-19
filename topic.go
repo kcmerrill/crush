@@ -70,7 +70,11 @@ func (t *Topic) WatchMessage(id string, msg *Message) {
 			t.lock.Unlock()
 			break
 		}
-		if time.Now().After(msg.Requeued.Add(msg.Flight)) {
+		flightdur, flighterr := time.ParseDuration(msg.Flight)
+		if flighterr != nil {
+			flightdur = 5 * time.Minute
+		}
+		if time.Now().After(msg.Requeued.Add(flightdur)) {
 			delete(t.flight, id)
 			t.lock.Unlock()
 			if msg.Attempts > 1 {

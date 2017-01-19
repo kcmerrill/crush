@@ -13,18 +13,18 @@ func NewMessage(topic, id, value string) *Message {
 		Attempts: 3,
 		Created:  time.Now(),
 		Requeued: time.Now(),
-		Flight:   5 * time.Minute,
+		Flight:   "5m",
 	}
 }
 
 type Message struct {
-	Topic    string        `json:"topic"`
-	Id       string        `json:"id"`
-	Value    string        `json:"value"`
-	Created  time.Time     `json:"created"`
-	Requeued time.Time     `json:"requeued"`
-	Flight   time.Duration `json:"flight"`
-	Attempts int           `json:"attempts"`
+	Topic    string    `json:"topic"`
+	Id       string    `json:"id"`
+	Value    string    `json:"value"`
+	Created  time.Time `json:"created"`
+	Requeued time.Time `json:"requeued"`
+	Flight   string `json:"flight"`
+	Attempts int `json:"attempts"`
 }
 
 func (m *Message) Format(which string) string {

@@ -1,5 +1,5 @@
 # Crush
-A simple, laid back, rest based in-memory message queue.
+A simple, laid back, RESTful in-memory message queue.
 
 [![Build Status](https://travis-ci.org/kcmerrill/crush.svg?branch=master)](https://travis-ci.org/kcmerrill/crush)
 

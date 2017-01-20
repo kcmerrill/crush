@@ -74,7 +74,10 @@ func (t *Topic) WatchMessage(id string, msg *Message) {
 		if flighterr != nil {
 			flightdur = 5 * time.Minute
 		}
-		if time.Now().After(msg.Requeued.Add(flightdur)) {
+
+		requeued := time.Unix(msg.Requeued, 0)
+
+		if time.Now().After(requeued.Add(flightdur)) {
 			delete(t.flight, id)
 			t.lock.Unlock()
 			if msg.Attempts > 1 {
@@ -100,7 +103,7 @@ func (t *Topic) ExpireMessage(msg *Message) {
 
 func (t *Topic) ReQueueMessage(msg *Message) {
 	msg.Attempts--
-	msg.Requeued = time.Now()
+	msg.Requeued = time.Now().Unix()
 	t.DeleteMessage(msg.Id)
 	t.lock.Lock()
 	t.messages[msg.Id] = msg

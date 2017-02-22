@@ -1,11 +1,13 @@
 package main
 
 import (
-	log "github.com/Sirupsen/logrus"
 	"sync"
 	"time"
+
+	log "github.com/Sirupsen/logrus"
 )
 
+// Topic contains all the messages and flight info for a given topic
 type Topic struct {
 	name     string
 	lock     *sync.Mutex
@@ -13,6 +15,7 @@ type Topic struct {
 	flight   map[string]*Message
 }
 
+// CreateTopic will init our defaults for a topic
 func CreateTopic(name string) *Topic {
 	t := &Topic{name: name}
 	t.lock = &sync.Mutex{}
@@ -22,22 +25,26 @@ func CreateTopic(name string) *Topic {
 	return t
 }
 
+// NewMessage will create a new message on a topic
 func (t *Topic) NewMessage(topic, id, value string) *Message {
 	msg := NewMessage(t.name, id, value)
 	t.lock.Lock()
 	t.messages[id] = msg
 	t.lock.Unlock()
-	log.WithFields(log.Fields{"topic": topic, "id": id}).Info("New Message")
+	log.WithFields(log.Fields{"topic": msg.Topic, "id": msg.ID, "flight": msg.Flight, "attempts": msg.Attempts}).Info("New Message")
 	return msg
 }
 
-func (t *Topic) NewRawMessage(msg *Message) {
+// NewRawMessage creates a new raw message specified by the end user
+func (t *Topic) NewRawMessage(msg *Message) *Message {
 	t.lock.Lock()
-	t.messages[msg.Id] = msg
+	t.messages[msg.ID] = msg
 	t.lock.Unlock()
-	log.WithFields(log.Fields{"topic": msg.Topic, "id": msg.Id}).Info("New Raw Message")
+	log.WithFields(log.Fields{"topic": msg.Topic, "id": msg.ID, "flight": msg.Flight, "attempts": msg.Attempts}).Info("New Message")
+	return msg
 }
 
+// Messages returns X messages requested from the specific topic
 func (t *Topic) Messages(many int) []*Message {
 	msgs := make([]*Message, 0)
 	for x := 0; x < many; x++ {
@@ -49,6 +56,7 @@ func (t *Topic) Messages(many int) []*Message {
 	return msgs
 }
 
+// Message returns a single message from the topic
 func (t *Topic) Message() *Message {
 	t.lock.Lock()
 	for id, msg := range t.messages {
@@ -62,6 +70,7 @@ func (t *Topic) Message() *Message {
 	return nil
 }
 
+// WatchMessage follows the topic from lease to completion, seeing if we should add it back to the topic or not
 func (t *Topic) WatchMessage(id string, msg *Message) {
 	for {
 		<-time.After(1 * time.Second)
@@ -75,12 +84,13 @@ func (t *Topic) WatchMessage(id string, msg *Message) {
 			flightdur = 5 * time.Minute
 		}
 
+		created := time.Unix(msg.Created, 0)
 		requeued := time.Unix(msg.Requeued, 0)
 
-		if time.Now().After(requeued.Add(flightdur)) {
+		if (!requeued.IsZero() && time.Now().After(requeued.Add(flightdur))) || time.Now().After(created.Add(flightdur)) {
 			delete(t.flight, id)
 			t.lock.Unlock()
-			if msg.Attempts > 1 {
+			if msg.Attempts > 1 || msg.Attempts == -1 {
 				go t.ReQueueMessage(msg)
 			} else {
 				go t.ExpireMessage(msg)
@@ -91,26 +101,32 @@ func (t *Topic) WatchMessage(id string, msg *Message) {
 	}
 }
 
+// CompleteMessage is an alias to DeleteMessage
 func (t *Topic) CompleteMessage(topic, id string) {
 	t.DeleteMessage(id)
 	log.WithFields(log.Fields{"topic": topic, "id": id}).Info("Message completed")
 }
 
+// ExpireMessage is an alias to DeleteMessage
 func (t *Topic) ExpireMessage(msg *Message) {
-	t.DeleteMessage(msg.Id)
-	log.WithFields(log.Fields{"topic": msg.Topic, "id": msg.Id}).Info("Message expired")
+	t.DeleteMessage(msg.ID)
+	log.WithFields(log.Fields{"topic": msg.Topic, "id": msg.ID}).Info("Message expired")
 }
 
+// ReQueueMessage will put the message back onto the queue so workers can consume it
 func (t *Topic) ReQueueMessage(msg *Message) {
-	msg.Attempts--
+	if msg.Attempts != -1 {
+		msg.Attempts--
+	}
 	msg.Requeued = time.Now().Unix()
-	t.DeleteMessage(msg.Id)
+	t.DeleteMessage(msg.ID)
 	t.lock.Lock()
-	t.messages[msg.Id] = msg
+	t.messages[msg.ID] = msg
 	t.lock.Unlock()
-	log.WithFields(log.Fields{"topic": msg.Topic, "id": msg.Id}).Info("Message requeued")
+	log.WithFields(log.Fields{"topic": msg.Topic, "id": msg.ID}).Info("Message requeued")
 }
 
+// DeleteMessage removes a message given an id from the topic
 func (t *Topic) DeleteMessage(id string) {
 	t.lock.Lock()
 	delete(t.messages, id)

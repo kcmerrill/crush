@@ -7,7 +7,7 @@ import (
 
 func TestMessageNewMessage(t *testing.T) {
 	m := NewMessage("topic", "id", "value")
-	if m.Id != "id" {
+	if m.ID != "id" {
 		t.Error("id incorrectly set")
 	}
 	if m.Topic != "topic" {
@@ -18,15 +18,10 @@ func TestMessageNewMessage(t *testing.T) {
 	}
 }
 
-func TestMessageFormat(t *testing.T) {
+func TestMessageString(t *testing.T) {
 	m := NewMessage("topic", "id", "value")
-	formatTestOne := m.Format("json")
+	formatTestOne := m.String()
 	if !strings.HasPrefix(formatTestOne, `{"topic":"topic","id":"id","value":"value","created":`) {
 		t.Error(formatTestOne + " should be a json formatted string")
-	}
-
-	formatTestTwo := m.Format("doesnotexist")
-	if formatTestTwo != "" {
-		t.Error("Invalid message format should return a blank string")
 	}
 }

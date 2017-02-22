@@ -77,9 +77,9 @@ func TestQComplete(t *testing.T) {
 	}
 	// Complete a message on a queue that doesn't exist
 	tm := &Message{
-		Id: "id",
+		ID: "id",
 	}
-	q.Complete("test", tm.Id)
+	q.Complete("test", tm.ID)
 
 	// lets try adding the message, and trying again
 	q.NewMessage("test", "id", "value")
@@ -89,7 +89,7 @@ func TestQComplete(t *testing.T) {
 
 	// grab the message
 	m := q.Message("test")
-	q.Complete("test", m.Id)
+	q.Complete("test", m.ID)
 	if len(q.topics["test"].messages) != 0 {
 		t.Error("test topic should have 0 message after completion")
 	}

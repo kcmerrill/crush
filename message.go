@@ -5,36 +5,34 @@ import (
 	"time"
 )
 
+// NewMessage returns a default init'd message
 func NewMessage(topic, id, value string) *Message {
 	return &Message{
-		Id:       id,
+		ID:       id,
 		Topic:    topic,
 		Value:    value,
 		Attempts: 3,
 		Created:  time.Now().Unix(),
-		Requeued: time.Now().Unix(),
 		Flight:   "5m",
 	}
 }
 
+// Message contains information needed to create a valid q message
 type Message struct {
 	Topic    string `json:"topic"`
-	Id       string `json:"id"`
+	ID       string `json:"id"`
 	Value    string `json:"value"`
-	Created  int64    `json:"created"`
-	Requeued int64    `json:"requeued"`
+	Created  int64  `json:"created"`
+	Requeued int64  `json:"requeued"`
 	Flight   string `json:"flight"`
 	Attempts int    `json:"attempts"`
 }
 
-func (m *Message) Format(which string) string {
-	if which == "json" {
-		str, err := json.Marshal(m)
-		if err != nil {
-			return ""
-		} else {
-			return string(str)
-		}
+func (m *Message) String() string {
+	str, err := json.Marshal(m)
+	if err != nil {
+		return ""
 	}
-	return ""
+
+	return string(str)
 }

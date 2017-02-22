@@ -43,7 +43,7 @@ func TestTopicNewRawMessage(t *testing.T) {
 	// same as new message, except raw only
 	topic := CreateTopic("bingowashisnameo")
 	msg := &Message{
-		Id:    "id",
+		ID:    "id",
 		Value: "woot",
 		Topic: "bingo",
 	}

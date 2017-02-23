@@ -6,7 +6,8 @@ A simple, laid back, RESTful in-memory message queue.
 
 ![crush](https://raw.githubusercontent.com/kcmerrill/queued/master/assets/crush.jpg)
 
-## Installation
+## Binaries || Installation
+[![MacOSX](https://raw.githubusercontent.com/kcmerrill/go-dist/master/assets/apple_logo.png "Mac OSX")] (http://go-dist.kcmerrill.com/kcmerrill/crush/mac/amd6) [![Linux](https://raw.githubusercontent.com/kcmerrill/go-dist/master/assets/linux_logo.png "Linux")] (http://go-dist.kcmerrill.com/kcmerrill/crush/linux/amd64)
 
 `$ go get -u github.com/kcmerrill/crush`
 

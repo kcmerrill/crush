@@ -7,17 +7,16 @@ A simple, laid back, RESTful in-memory message queue.
 ![crush](https://raw.githubusercontent.com/kcmerrill/queued/master/assets/crush.jpg)
 
 ## Binaries || Installation
-[![MacOSX](https://raw.githubusercontent.com/kcmerrill/go-dist/master/assets/apple_logo.png "Mac OSX")] (http://go-dist.kcmerrill.com/kcmerrill/crush/mac/amd6) [![Linux](https://raw.githubusercontent.com/kcmerrill/go-dist/master/assets/linux_logo.png "Linux")](http://go-dist.kcmerrill.com/kcmerrill/crush/linux/amd64)
+
+[![MacOSX](https://raw.githubusercontent.com/kcmerrill/go-dist/master/assets/apple_logo.png "Mac OSX")](http://go-dist.kcmerrill.com/kcmerrill/crush/mac/amd64) [![Linux](https://raw.githubusercontent.com/kcmerrill/go-dist/master/assets/linux_logo.png "Linux")](http://go-dist.kcmerrill.com/kcmerrill/crush/linux/amd64)
+
+via golang:
 
 `$ go get -u github.com/kcmerrill/crush`
 
 or via docker:
 
 `$ docker run -P -d --name crush kcmerrill/crush`
-
-or via alfred:
-
-`$ alfred kcmerrill/crush start`
 
 ## Quick Setup
 

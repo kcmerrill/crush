@@ -73,7 +73,6 @@ func (t *Topic) Message() *Message {
 // WatchMessage follows the topic from lease to completion, seeing if we should add it back to the topic or not
 func (t *Topic) WatchMessage(id string, msg *Message) {
 	for {
-		<-time.After(1 * time.Second)
 		t.lock.Lock()
 		if _, completed := t.flight[id]; !completed {
 			t.lock.Unlock()
@@ -87,7 +86,7 @@ func (t *Topic) WatchMessage(id string, msg *Message) {
 		created := time.Unix(msg.Created, 0)
 		requeued := time.Unix(msg.Requeued, 0)
 
-		if (!requeued.IsZero() && time.Now().After(requeued.Add(flightdur))) || time.Now().After(created.Add(flightdur)) {
+		if (msg.Requeued == 0 && time.Now().After(created.Add(flightdur))) || (msg.Requeued != 0 && time.Now().After(requeued.Add(flightdur))) {
 			delete(t.flight, id)
 			t.lock.Unlock()
 			if msg.Attempts > 1 || msg.Attempts == -1 {
@@ -98,6 +97,7 @@ func (t *Topic) WatchMessage(id string, msg *Message) {
 			break
 		}
 		t.lock.Unlock()
+		<-time.After(1 * time.Second)
 	}
 }
 

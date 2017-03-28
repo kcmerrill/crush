@@ -81,7 +81,7 @@ func (q *Q) WebTopicID(response http.ResponseWriter, request *http.Request) {
 				msg.Attempts, _ = strconv.Atoi(attempts[0])
 			}
 
-			q.NewRawMessage(vars["topic"], msg)
+			q.NewRawMessage(msg)
 			response.WriteHeader(http.StatusOK)
 			fmt.Fprintf(response, msg.String())
 		}

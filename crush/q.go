@@ -33,14 +33,14 @@ func (q *Q) NewMessage(topic, key, value string) *Message {
 }
 
 // NewRawMessage creates a new message based on a raw message
-func (q *Q) NewRawMessage(topic string, msg *Message) *Message {
+func (q *Q) NewRawMessage(msg *Message) *Message {
 	q.lock.Lock()
 	var m *Message
-	if _, exists := q.topics[topic]; exists {
-		m = q.topics[topic].NewRawMessage(msg)
+	if _, exists := q.topics[msg.Topic]; exists {
+		m = q.topics[msg.Topic].NewRawMessage(msg)
 	} else {
-		q.topics[topic] = CreateTopic(topic)
-		m = q.topics[topic].NewRawMessage(msg)
+		q.topics[msg.Topic] = CreateTopic(msg.Topic)
+		m = q.topics[msg.Topic].NewRawMessage(msg)
 	}
 	q.lock.Unlock()
 	return m

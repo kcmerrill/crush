@@ -5,7 +5,7 @@ tdd*:
 
 test*:
     summary: Test
-    command: go test --cover
+    command: go test --cover crush/*
 
 build*:
     summary: Build docker container

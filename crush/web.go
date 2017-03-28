@@ -1,4 +1,4 @@
-package main
+package crush
 
 import (
 	"fmt"
@@ -12,13 +12,13 @@ import (
 )
 
 // Web starts our webserver on a given port
-func Web(port string) {
+func (q *Q) Web(port string) {
 	log.WithFields(log.Fields{"port": port}).Info("Crush is starting ...")
 	r := mux.NewRouter()
 
 	// setup our routes
-	r.HandleFunc("/{topic}/{id}", WebTopicID)
-	r.HandleFunc("/{topic}", WebNewMessage)
+	r.HandleFunc("/{topic}/{id}", q.WebTopicID)
+	r.HandleFunc("/{topic}", q.WebNewMessage)
 
 	// set some defaults
 	srv := &http.Server{
@@ -33,7 +33,7 @@ func Web(port string) {
 }
 
 // WebNewMessage handler for web requests with new messages
-func WebNewMessage(response http.ResponseWriter, request *http.Request) {
+func (q *Q) WebNewMessage(response http.ResponseWriter, request *http.Request) {
 	vars := mux.Vars(request)
 	msg := q.Message(vars["topic"])
 	if msg != nil {
@@ -48,7 +48,7 @@ func WebNewMessage(response http.ResponseWriter, request *http.Request) {
 }
 
 // WebTopicID creates/deletes/gets a message based on a topic and id
-func WebTopicID(response http.ResponseWriter, request *http.Request) {
+func (q *Q) WebTopicID(response http.ResponseWriter, request *http.Request) {
 	vars := mux.Vars(request)
 	get := request.URL.Query()
 	switch {

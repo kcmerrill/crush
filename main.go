@@ -2,10 +2,11 @@ package main
 
 import (
 	"flag"
+
+	"github.com/kcmerrill/crush/crush"
 )
 
 var (
-	q       *Q
 	port    = flag.String("port", "8080", "webserver port")
 	version = "dev"
 	commit  = "n/a"
@@ -13,6 +14,5 @@ var (
 
 func main() {
 	flag.Parse()
-	q = CreateQ()
-	Web(*port)
+	crush.CreateQ().Web(*port)
 }

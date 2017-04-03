@@ -3,6 +3,8 @@ package crush
 import (
 	"sync"
 
+	"strings"
+
 	log "github.com/Sirupsen/logrus"
 )
 
@@ -112,8 +114,10 @@ func (q *Q) ProcessDeadLetter() {
 				dl := <-q.deadLetter
 				// we already checked, but lets check again. Safety pumpking safety ...
 				if dl.DeadLetter != "" {
-					q.NewMessage(dl.DeadLetter, dl.ID, dl.Value)
-					log.WithFields(log.Fields{"topic": dl.Topic, "id": dl.ID, "dead-letter": dl.DeadLetter}).Info("Moving message to deadletter")
+					for _, newTopic := range strings.Split(dl.DeadLetter, " ") {
+						q.NewMessage(newTopic, dl.ID, dl.Value)
+						log.WithFields(log.Fields{"previous-topic": dl.Topic, "id": dl.ID, "new-topic": newTopic}).Info("Moving message to deadletter")
+					}
 				}
 			}
 		}()

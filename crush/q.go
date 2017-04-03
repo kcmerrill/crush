@@ -110,6 +110,7 @@ func (q *Q) ProcessDeadLetter() {
 		go func() {
 			for {
 				dl := <-q.deadLetter
+				// we already checked, but lets check again. Safety pumpking safety ...
 				if dl.DeadLetter != "" {
 					q.NewMessage(dl.DeadLetter, dl.ID, dl.Value)
 					log.WithFields(log.Fields{"topic": dl.Topic, "id": dl.ID, "dead-letter": dl.DeadLetter}).Info("Moving message to deadletter")

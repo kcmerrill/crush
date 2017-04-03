@@ -81,6 +81,11 @@ func (q *Q) WebTopicID(response http.ResponseWriter, request *http.Request) {
 				msg.Attempts, _ = strconv.Atoi(attempts[0])
 			}
 
+			if deadletter, exists := get["dead-letter"]; exists && len(get["dead-letter"]) > 0 {
+				// user set attempts, so lets set it here
+				msg.DeadLetter = deadletter[0]
+			}
+
 			q.NewRawMessage(msg)
 			response.WriteHeader(http.StatusOK)
 			fmt.Fprintf(response, msg.String())

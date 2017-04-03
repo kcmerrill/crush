@@ -9,15 +9,16 @@ import (
 
 // Topic contains all the messages and flight info for a given topic
 type Topic struct {
-	name     string
-	lock     *sync.Mutex
-	messages map[string]*Message
-	flight   map[string]*Message
+	name        string
+	lock        *sync.Mutex
+	messages    map[string]*Message
+	flight      map[string]*Message
+	deadLetterQ chan *Message
 }
 
 // CreateTopic will init our defaults for a topic
-func CreateTopic(name string) *Topic {
-	t := &Topic{name: name}
+func CreateTopic(name string, deadLetterQ chan *Message) *Topic {
+	t := &Topic{name: name, deadLetterQ: deadLetterQ}
 	t.lock = &sync.Mutex{}
 	t.messages = make(map[string]*Message)
 	t.flight = make(map[string]*Message)
@@ -93,6 +94,10 @@ func (t *Topic) WatchMessage(id string, msg *Message) {
 				go t.ReQueueMessage(msg)
 			} else {
 				go t.ExpireMessage(msg)
+				if msg.DeadLetter != "" {
+					// if deadletter isn't empty, lets send it on it's way ...
+					t.deadLetterQ <- msg
+				}
 			}
 			break
 		}

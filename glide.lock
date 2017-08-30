@@ -1,14 +1,19 @@
-hash: 8c321653a0830ce6b521983741fdee67cc943c9ecd33338159bb4c4c5697b388
-updated: 2017-01-15T15:20:32.991631505-07:00
+hash: a0d9e86b631b74da4602aedb8222fd5246d4bee0e20d2008d79d0e6c01e7dc75
+updated: 2017-08-29T22:13:29.255131858-06:00
 imports:
 - name: github.com/gorilla/context
   version: 08b5f424b9271eedf6f9f0ce86cb9396ed337a42
 - name: github.com/gorilla/mux
-  version: 0eeaf8392f5b04950925b8a69fe70f110fa7cbfc
-- name: github.com/Sirupsen/logrus
-  version: 61e43dc76f7ee59a82bdf3d71033dc12bea4c77d
+  version: bcd8bc72b08df0f70df986b97f95590779502d31
+- name: github.com/sirupsen/logrus
+  version: f006c2ac4710855cf0f916dd6b77acf6b048dc6e
+- name: golang.org/x/crypto
+  version: 81e90905daefcd6fd217b62423c0908922eadb30
+  subpackages:
+  - ssh/terminal
 - name: golang.org/x/sys
-  version: d75a52659825e75fff6158388dddc6a5b04f9ba5
+  version: aaabbdc969c3935a2a7f61efac801e7163c73a2a
   subpackages:
   - unix
+  - windows
 testImports: []

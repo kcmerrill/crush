@@ -3,7 +3,7 @@ package main
 import (
 	"flag"
 
-	"github.com/kcmerrill/crush/crush"
+	"github.com/kcmerrill/crush/core"
 )
 
 var (
@@ -14,5 +14,5 @@ var (
 
 func main() {
 	flag.Parse()
-	crush.CreateQ().Web(*port)
+	core.CreateQ().Web(*port)
 }

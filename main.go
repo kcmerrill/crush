@@ -7,12 +7,15 @@ import (
 )
 
 var (
-	port    = flag.String("port", "8080", "webserver port")
-	version = "dev"
-	commit  = "n/a"
+	httpPort  = flag.String("web", "80", "web port")
+	statsPort = flag.String("stats", "8080", "stats port")
+	version   = "dev"
+	commit    = "n/a"
 )
 
 func main() {
 	flag.Parse()
-	core.CreateQ().Web(*port)
+	crush := core.CreateQ()
+	go crush.Web(*httpPort)
+	crush.Stat.Web(*statsPort, "")
 }

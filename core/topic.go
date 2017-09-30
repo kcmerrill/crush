@@ -109,6 +109,7 @@ func (t *Topic) WatchMessage(id string, msg *Message) {
 						t.q.Stat.E("_system").I("new-messages").Add(-1)
 						t.q.Stat.E(t.name).I("new-messages").Add(-1)
 						log.WithFields(log.Fields{"previous-topic": t.name, "id": msg.ID, "new-topic": newTopic}).Info("Moving message to '" + newTopic + "'")
+						t.q.NewMessage(newTopic, msg.ID, msg.Value)
 					}
 				}
 			}
